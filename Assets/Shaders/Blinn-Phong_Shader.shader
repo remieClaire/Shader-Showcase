@@ -46,12 +46,23 @@ Shader "Custom/Blinn-Phong_Shader"
                 float _Shininess;
             CBUFFER_END
 
+            float3 tolinear(float3 sRGBColor) {
+                float3 linearColor;
+
+                // gamma factor
+                float g = 2.2;
+                linearColor = pow(sRGBColor, float3(g, g, g));
+
+                return linearColor;
+            }
+
             float3 blinnphong(v2f f) {
                 // light vars
                 Light light = GetMainLight();
 
                 // material vars
                 float3 material = tex2D(_DiffuseTex, f.uv).rgb;
+                material = tolinear(material);
 
                 // ambient
                 float a = 0.2;
@@ -72,7 +83,6 @@ Shader "Custom/Blinn-Phong_Shader"
                 float3 specular = light.color * spec;
 
                 return float3(ambient + diffuse + specular);
-
             }
 
             // vertex shader
@@ -82,10 +92,9 @@ Shader "Custom/Blinn-Phong_Shader"
                 VertexPositionInputs input = GetVertexPositionInputs(v.pos);
 
                 // send data to fragment shader
-                output.positionCS = input.positionCS;
-                output.positionWS = input.positionWS;
-                output.positionVS = GetWorldSpaceViewDir(output.positionWS);
-                //input.positionVS;
+                output.positionCS = input.positionCS; // clip space
+                output.positionWS = input.positionWS; // world space
+                output.positionVS = GetWorldSpaceViewDir(output.positionWS); // view space
 
                 output.normalWS = v.norm;
                 output.uv = v.uv;
@@ -96,11 +105,12 @@ Shader "Custom/Blinn-Phong_Shader"
             // fragment shader
             float4 frag(v2f f) : SV_TARGET {
 
-                // sample diffuse texture
-                // float3 diffuseTex = tex2D(_DiffuseTex, f.uv).rgb;
-
-                // apply lighting
+                // Blinn-Phong lighting
                 float3 output = blinnphong(f);
+
+                // gamma correction
+                float g = 1.0 / 2.2;
+                output = pow(output, float3(g, g, g));
 
                 return float4(output, 1);
             }

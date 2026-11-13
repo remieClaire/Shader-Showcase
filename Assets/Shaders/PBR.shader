@@ -1,4 +1,4 @@
-Shader "Custom/PBR_Shader"
+Shader "Custom/PBR"
 {
     // holds material properties (i.e. textures, vectors, etc.)
     Properties

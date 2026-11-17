@@ -12,7 +12,7 @@ Following alongside the open-source OpenGL website, I attempt to recreate each a
 * _Deferred Shading_
 * _SSAO_
 
-All shaders created in Unity and written in HLSL.
+All shaders created in Unity and written in HLSL. The goal for this project is to build upon the aforementioned knowledge to successfully recreate a PBR shader. 
 
 # Images
 <p>

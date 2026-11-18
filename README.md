@@ -16,8 +16,14 @@ All shaders created in Unity and written in HLSL. The goal for this project is t
 
 # Images
 <p>
+  <img alt="image depicting ambient component of blinn-phong lighting" src="images/ambient blinn-phong.png">
+  <img alt="image depicting diffuse component of blinn-phong lighting" src="images/diffuse blinn-phong.png">
+  <img alt="image depicting specular component of blinn-phong lighting" src="images/specular blinn-phong.png">
+</p>
+<p>
   <img alt="image depicting the blinn-phong lighting effect" src="images/blinn-phong.png"><br>
   Fig 1. Blinn-Phong directional lighting w/ gamma correction via sRGB texture
+</p>
 
 # References
 * [LearnOpenGL: Advanced Lighting](https://learnopengl.com/Advanced-Lighting/Advanced-Lighting)

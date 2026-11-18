@@ -46,6 +46,7 @@ Shader "Custom/BlinnPhong"
                 float _Shininess;
             CBUFFER_END
 
+            // converts color from sRGB to linear space
             float3 tolinear(float3 sRGBColor) {
                 float3 linearColor;
 
@@ -62,7 +63,7 @@ Shader "Custom/BlinnPhong"
 
                 // material vars
                 float3 material = tex2D(_DiffuseTex, f.uv).rgb;
-                material = tolinear(material);
+                // material = tolinear(material);
 
                 // ambient
                 float a = 0.2;
@@ -108,9 +109,11 @@ Shader "Custom/BlinnPhong"
                 // Blinn-Phong lighting
                 float3 output = blinnphong(f);
 
-                // gamma correction
+                /*
+                // gamma correction (for if material is in linear space)
                 float g = 1.0 / 2.2;
                 output = pow(output, float3(g, g, g));
+                */
 
                 return float4(output, 1);
             }
